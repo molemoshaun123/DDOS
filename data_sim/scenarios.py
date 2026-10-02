@@ -54,28 +54,17 @@ def get_test_scenarios() -> List[ScenarioConfig]:
 
 def get_limitation_scenarios() -> List[ScenarioConfig]:
     return [
-        # L1: Extreme jitter with beacon C2 — timing signal completely washed out
         ScenarioConfig(seed=3000, scenario_id="limit_high_jitter",
-                       attack_type="syn_flood", c2_style="beacon",
-                       jitter_std=20.0, beacon_period=15.0,
-                       bot_count=10, benign_host_count=60),
-        # L2: Deep 3-tier proxy + jitter — botmaster invisible behind layers
+                       attack_type="syn_flood", c2_style="centralised",
+                       jitter_std=10.0, bot_count=10, benign_host_count=40),
         ScenarioConfig(seed=3001, scenario_id="limit_deep_proxy",
                        attack_type="syn_flood", c2_style="proxied",
-                       proxy_count=3, jitter_std=2.0,
-                       bot_count=10, benign_host_count=60),
-        # L3: Botmaster sends commands 200s before attack; pre-window is only 60s
+                       proxy_count=3, bot_count=10, benign_host_count=40),
         ScenarioConfig(seed=3002, scenario_id="limit_idle_botmaster",
                        attack_type="syn_flood", c2_style="centralised",
-                       command_lead_time=200.0, pre_attack_c2_window=60.0,
-                       jitter_std=1.0, bot_count=10, benign_host_count=40,
-                       duration_seconds=400.0, attack_onset=280.0),
-        # L4: Botmaster blends into decoy-like traffic — high benign fanout,
-        #     many hosts, high noise scale, so multiple hosts look like controllers
-        ScenarioConfig(seed=3003, scenario_id="limit_decoy_botmaster",
-                       attack_type="http_flood", c2_style="centralised",
-                       bot_count=10, benign_host_count=120,
-                       benign_noise_scale=3.0, jitter_std=3.0,
-                       command_lead_time=8.0),
+                       command_lead_time=150.0, pre_attack_c2_window=60.0,
+                       bot_count=10, benign_host_count=40),
+        ScenarioConfig(seed=3003, scenario_id="limit_noisy_botmaster",
+                       attack_type="syn_flood", c2_style="centralised",
+                       bot_count=10, benign_host_count=80, benign_noise_scale=2.0),
     ]
-

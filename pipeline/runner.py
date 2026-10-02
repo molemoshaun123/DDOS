@@ -42,7 +42,10 @@ def run_pipeline(
     if not bots:
         return PipelineResult(False, victim, set(), {}, [], len(alerts))
 
+    print("RUN_PIPELINE df len:", len(df))
+    print("RUN_PIPELINE bots:", len(bots))
     ranking = rank_candidates(df, bots, onsets, victim, pre_window, ablate)
+    print("RUN_PIPELINE ranking len:", len(ranking))
 
     return PipelineResult(
         detected=True, victim_ip=victim, suspected_bots=bots,
