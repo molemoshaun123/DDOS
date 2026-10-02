@@ -1,6 +1,18 @@
 # DDoS Causal Onset Back-Tracing (COBT)
 
-This project provides a complete synthetic pipeline to evaluate Causal Onset Back-Tracing (COBT), a novel algorithm for identifying botmasters and command-and-control (C2) servers in a DDoS attack. It includes a highly configurable traffic simulator, a sliding-window detector to flag suspected bots via onset anomalies, and an attribution component that fuses temporal precedence, fan-out synchrony, baseline deviations, and graph centrality to rank likely controllers. The full end-to-end evaluation validates the COBT method against multiple attack types, C2 styles, and network conditions.
+**About This Project**
+I built this project to help an Honours student with their university project. It is designed to solve a major problem in cybersecurity: when a website is hit by a massive cyberattack (called a DDoS attack), it is very hard to figure out who actually ordered the attack. 
+
+**What is a DDoS attack?** 
+Imagine thousands of people trying to enter a small store at exactly the same time. The store gets overwhelmed and nobody can buy anything. A DDoS (Distributed Denial of Service) attack is similar: a hacker (the "botmaster") secretly takes control of thousands of normal computers around the world. When the hacker gives the command, all those computers flood a target website with junk traffic, causing the website to crash.
+
+**What does this code do?**
+Most security tools only focus on stopping the junk traffic. This project goes a step further: it acts like a digital detective. 
+1. **The Simulator** creates a fake network with normal traffic, a fake hacker, and fake compromised computers.
+2. **The Detector** watches the traffic and spots exactly when the attack starts.
+3. **The Attributor (COBT)** is the brain of the project. It looks backward in time right before the attack started to find the hidden "Go!" commands sent by the hacker. By analyzing timing and connection patterns, it creates a "most wanted" list, ranking the most likely computers that belong to the hacker.
+
+This code proves that by using clever math and timing analysis, we can trace a cyberattack back to its source without needing to look inside the encrypted data packets.
 
 ## Requirements
 
